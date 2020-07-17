@@ -25,3 +25,15 @@ func (p *PluginList) Set(v string) error {
 	p.Paths = append(p.Paths, v)
 	return nil
 }
+
+func (p *PluginList) Initialize() error {
+	for _, path := range p.Paths {
+		fmt.Printf("loading plugin bundle: %v\n", path)
+
+		if err := LoadPlugins(path); err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
